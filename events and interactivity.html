@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Features</title>
+    <style>
+        .hidden { display: none; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <!-- Task 1: Form Validation -->
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <span class="error" id="nameError"></span>
+        
+        <input type="email" id="email" placeholder="Email" required>
+        <span class="error" id="emailError"></span>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Task 2: Toggle Visibility -->
+    <button id="toggleBtn">Show Content</button>
+    <div id="secretContent" class="hidden">
+        <p>🎉 Surprise content!</p>
+    </div>
+
+    <!-- Task 3: Interactive Counter -->
+    <div>
+        <button id="decrementBtn">-</button>
+        <span id="counter">0</span>
+        <button id="incrementBtn">+</button>
+    </div>
+
+    <script>
+        // FORM VALIDATION
+        const form = document.getElementById('contactForm');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+
+        form.addEventListener('submit', (e) => {
+            let isValid = true;
+            
+            // Name validation
+            const name = document.getElementById('name').value.trim();
+            if(name === '') {
+                nameError.textContent = 'Name is required';
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailRegex.test(email)) {
+                emailError.textContent = 'Invalid email format';
+                isValid = false;
+            }
+
+            if(!isValid) {
+                e.preventDefault(); // Block form submission
+            } else {
+                alert('Form submitted successfully!');
+                // Here you would typically send data to server
+            }
+        });
+
+        // TOGGLE VISIBILITY
+        const toggleBtn = document.getElementById('toggleBtn');
+        const content = document.getElementById('secretContent');
+
+        toggleBtn.addEventListener('click', () => {
+            content.classList.toggle('hidden');
+            toggleBtn.textContent = content.classList.contains('hidden') 
+                ? 'Show Content' 
+                : 'Hide Content';
+        });
+
+        // INTERACTIVE COUNTER
+        let count = 0;
+        const counterDisplay = document.getElementById('counter');
+        
+        document.getElementById('incrementBtn').addEventListener('click', () => {
+            count++;
+            counterDisplay.textContent = count;
+        });
+
+        document.getElementById('decrementBtn').addEventListener('click', () => {
+            count--;
+            counterDisplay.textContent = count;
+        });
+    </script>
+</body>
+</html>
